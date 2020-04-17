@@ -15,7 +15,7 @@ namespace AbbreviationGlossary.Tests.Unit
         public void LoadGlossaryFromCsvUrl()
         {
             Glossary glossary = new Glossary();
-            string url = "";
+            string url = "https://github.com/SSAgov/abbreviation-glossary/raw/master/src/AbbreviationGlossary.Tests/glossary.csv";
             glossary.LoadCsvFileFromUrl(url);
             Assert.True(glossary.GlossaryItems.Count > 10);
         }
