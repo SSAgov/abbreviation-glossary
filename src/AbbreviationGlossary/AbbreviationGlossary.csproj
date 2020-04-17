@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <RootNamespace>AbbreviationGlossary</RootNamespace>
+        <Authors>Joseph Amalfitano</Authors>
+        <Company>Social Security Administration</Company>
+        <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+        <Description>A .NET Standard 2.0 library that enables checking terms and abbreviations for existence against a glossary of approved terms and abbreviations. In addition, the glossary has methods to abbreviate terms or expand abbreviations based on the GlossaryItems in the glossary. It was designed for checking data and database models for compliance with a standard glossary of terms.</Description>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <AssemblyName>AbbreviationGlossary</AssemblyName>
+        <PackageId>AbbreviationGlossary</PackageId>
+        <Product>Naming Standards Glossary</Product>
+        <PackageTags>abbreviation glossary,glossary,name converter,compliance,compliance checker, naming standards, abbreviations,name abbreviator, data modeling, database models, data dictionary</PackageTags>
+        <RepositoryUrl>https://github.com/SSAgov/abbreviation-glossary</RepositoryUrl>
+        <Version>1.0.6</Version>
+        <PackageReleaseNotes>Removed extra columns from glossary. now the glossary spreadsheet should only have three columns: Term, Definition, IsTermPreferred</PackageReleaseNotes>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CsvHelper" Version="12.1.2" />
+    <PackageReference Include="Microsoft.CSharp" Version="4.6.0" />
+    <PackageReference Include="PrimitiveExtensions" Version="1.0.9" />
+  </ItemGroup>
+
+</Project>

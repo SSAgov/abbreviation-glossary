@@ -1,0 +1,25 @@
+
+Term,Abbreviation,IsTermPreferred
+Code,CD,true
+Hearing,HRG,true
+Hearing Office,HOFC,true
+Hearing Office Code,HOCD,true
+Office,OFC,true
+Office Code,OCD,true
+Person,PRSN,true
+Type,TYP,true
+Address,ADDR,true
+Time,TIME,true
+Timestamp,TS,true
+Identifier,ID,true
+Amount,AMT,true
+Count,CT,true
+Description,DESC,true
+Days,DAYS,false
+Day Count,DAYS,true
+Attempt,ATMPT,true
+Try,ATMPT,false
+IRS,IRS,false
+Internal Revenue Service,IRS,true
+Social Security Administration,SSA,true
+SSA,SSA,false
