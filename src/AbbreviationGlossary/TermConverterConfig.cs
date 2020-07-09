@@ -6,11 +6,13 @@ namespace AbbreviationGlossary
 {
     public class TermConverterConfig
     {
+        private string termDelimeter;
+
         /// <summary>
         /// The CaseConvention to be used when converting to a logical name. The default is Pascal Case.
         /// </summary>
         public CaseConvention TermCaseConvention { get; set; }
-        
+
         /// <summary>
         /// The CaseConvention to be used when converting to a physical name. The default is UPPPERCASE. 
         /// </summary>
@@ -19,7 +21,16 @@ namespace AbbreviationGlossary
         /// <summary>
         /// The delimter character (or characters) to seperate parts of a name. The default is a space.
         /// </summary>
-        public string TermDelimeter { get; set; }
+        public string TermDelimeter { 
+            get => termDelimeter;
+            set
+            {
+                if (value == "-")
+                {
+                    TreatHyphenAsTermDelimeter = true;
+                }
+                termDelimeter = value; 
+            } }
 
         /// <summary>
         /// The delimter character (or characters) to seperate parts of a name. The default is an underscore.
@@ -53,5 +64,5 @@ namespace AbbreviationGlossary
         }
 
     }
- 
+
 }

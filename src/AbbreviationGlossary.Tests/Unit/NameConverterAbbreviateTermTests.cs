@@ -157,7 +157,7 @@ namespace AbbreviationGlossary.Tests.Unit
         }
 
         [Fact]
-        public void HyphenDelimeter_Input()
+        public void HyphenDelimeter_BadInput_Output()
         {
             //Arrange
             Glossary nsg = TestData.GetTestGlossary();
@@ -166,13 +166,15 @@ namespace AbbreviationGlossary.Tests.Unit
             nsg.TermConverterConfiguration.AbbreviationCaseConvention = CaseConvention.lowercase;
 
             //Act
-            string term = "Hearing-Office-Code";
-            string abbreviatedTerm = "hrg-ofc-cd";
-            string convertedAbbreviation = nsg.ExpandAbbreviation(abbreviatedTerm).Output;
+            string term = "nopenope-Office-Code";
+            string abbreviatedTerm = "<nopenope>-ofc-cd";
+            string convertedAbbreviatedTerm = nsg.AbbreviateTerm(term).Output;
 
             //Assert
-            Assert.Equal(term, convertedAbbreviation);
+            Assert.Equal(abbreviatedTerm, convertedAbbreviatedTerm);
         }
+
+
 
 
 

@@ -13,9 +13,10 @@
         <Product>Naming Standards Glossary</Product>
         <PackageTags>abbreviation glossary,glossary,name converter,compliance,compliance checker, naming standards, abbreviations,name abbreviator, data modeling, database models, data dictionary</PackageTags>
         <RepositoryUrl>https://github.com/SSAgov/abbreviation-glossary</RepositoryUrl>
-        <Version>1.0.6</Version>
-        <PackageReleaseNotes>updated references; added license</PackageReleaseNotes>
+        <Version>1.0.7</Version>
+        <PackageReleaseNotes>hyphen delimeter bugfix</PackageReleaseNotes>
         <PackageLicenseFile>LICENSE</PackageLicenseFile>
+        <AssemblyVersion>1.0.7.0</AssemblyVersion>
   </PropertyGroup>
 
   <ItemGroup>

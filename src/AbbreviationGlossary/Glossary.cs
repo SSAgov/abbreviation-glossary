@@ -166,11 +166,11 @@ namespace AbbreviationGlossary
                 r.HyphenNeededForTerm = true;
 
             }
-            
+
 
             r.Mismatch = r.TermToAbbreviation != r.Abbreviation || r.AbbreviationToTerm != r.Term;
 
-         
+
             r.Stopwatch.Stop();
             return r;
         }
@@ -191,8 +191,11 @@ namespace AbbreviationGlossary
                 r.Output = "";
                 return r;
             }
-            abbreviation = abbreviation.Replace("<", "");
-            abbreviation = abbreviation.Replace(">", "");
+            if (TermConverterConfiguration.DelimeterForNotFound_Left.Length > 0)
+                abbreviation = abbreviation.Replace(TermConverterConfiguration.DelimeterForNotFound_Left, "");
+            
+            if (TermConverterConfiguration.DelimeterForNotFound_Right.Length > 0)
+                abbreviation = abbreviation.Replace(TermConverterConfiguration.DelimeterForNotFound_Right, "");
 
             string term = "";
             string[] nodes = abbreviation.Split(new string[] { TermConverterConfiguration.AbbreviationDelimeter }, StringSplitOptions.None);
@@ -248,8 +251,18 @@ namespace AbbreviationGlossary
                 }
             }
             term = term.Trim().Replace(" ", TermConverterConfiguration.TermDelimeter);
-
-            r.Output = term.Replace(TermConverterConfiguration.DelimeterForNotFound_Left + TermConverterConfiguration.DelimeterForNotFound_Right, "");
+            if ((TermConverterConfiguration.DelimeterForNotFound_Left + TermConverterConfiguration.DelimeterForNotFound_Right).Length > 0)
+            {
+                r.Output = term.Replace(TermConverterConfiguration.DelimeterForNotFound_Left + TermConverterConfiguration.DelimeterForNotFound_Right, "");
+            }
+            else
+            {
+                if (TermConverterConfiguration.TermDelimeter.Length > 0 &&
+                    term.Substring(0, TermConverterConfiguration.TermDelimeter.Length) == TermConverterConfiguration.TermDelimeter)
+                    r.Output = term.ReplaceFirstOccurence(TermConverterConfiguration.TermDelimeter,"");
+                else
+                    r.Output = term;
+            }
             return r;
         }
 
@@ -327,9 +340,9 @@ namespace AbbreviationGlossary
                 else
                 {
                     int delimeterIndex = searchString.LastIndexOf(TermConverterConfiguration.TermDelimeter);
-                    if (!TermConverterConfiguration.TreatHyphenAsTermDelimeter || TermConverterConfiguration.TermDelimeter =="-")
+                    if (delimeterIndex >-1 &&(!TermConverterConfiguration.TreatHyphenAsTermDelimeter || TermConverterConfiguration.TermDelimeter == "-"))
                     {
-                        subStringOfsearchString = searchString.Substring(0, delimeterIndex);
+                            subStringOfsearchString = searchString.Substring(0, delimeterIndex);
                     }
                     else
                     {
@@ -373,27 +386,33 @@ namespace AbbreviationGlossary
                             switch (TermConverterConfiguration.AbbreviationCaseConvention)
                             {
                                 case CaseConvention.PascalCase:
-
-                                    abbreviatedTerm = abbreviatedTerm + TermConverterConfiguration.AbbreviationDelimeter + TermConverterConfiguration.DelimeterForNotFound_Left + searchString.ToTitleCase();
+                                    if (abbreviatedTerm == string.Empty)
+                                        abbreviatedTerm = TermConverterConfiguration.DelimeterForNotFound_Left + searchString.ToTitleCase();
+                                    else
+                                        abbreviatedTerm = abbreviatedTerm + TermConverterConfiguration.AbbreviationDelimeter + TermConverterConfiguration.DelimeterForNotFound_Left + searchString.ToTitleCase();
                                     break;
 
                                 case CaseConvention.camelCase:
-                                    if (abbreviatedTerm == "")
-                                    {
-                                        abbreviatedTerm = abbreviatedTerm + TermConverterConfiguration.AbbreviationDelimeter + TermConverterConfiguration.DelimeterForNotFound_Left + searchString.ToLower();
-                                    }
+                                    if (abbreviatedTerm == string.Empty)
+                                        abbreviatedTerm = TermConverterConfiguration.DelimeterForNotFound_Left + searchString.ToLower();
                                     else
-                                    {
                                         abbreviatedTerm = abbreviatedTerm + TermConverterConfiguration.AbbreviationDelimeter + TermConverterConfiguration.DelimeterForNotFound_Left + searchString.ToTitleCase();
-                                    }
                                     break;
 
                                 case CaseConvention.lowercase:
-                                    abbreviatedTerm = abbreviatedTerm + TermConverterConfiguration.AbbreviationDelimeter + TermConverterConfiguration.DelimeterForNotFound_Left + searchString.ToLower();
+                                    if (abbreviatedTerm == string.Empty)
+                                        abbreviatedTerm = TermConverterConfiguration.DelimeterForNotFound_Left + searchString.ToLower();
+                                    else
+                                        abbreviatedTerm = abbreviatedTerm + TermConverterConfiguration.AbbreviationDelimeter + TermConverterConfiguration.DelimeterForNotFound_Left + searchString.ToLower();
+
                                     break;
 
                                 case CaseConvention.UPPERCASE:
-                                    abbreviatedTerm = abbreviatedTerm + TermConverterConfiguration.AbbreviationDelimeter + TermConverterConfiguration.DelimeterForNotFound_Left + searchString.ToUpper();
+                                    if(abbreviatedTerm == string.Empty)
+                                        abbreviatedTerm = TermConverterConfiguration.DelimeterForNotFound_Left + searchString.ToUpper();
+                                    else
+                                        abbreviatedTerm = abbreviatedTerm + TermConverterConfiguration.AbbreviationDelimeter + TermConverterConfiguration.DelimeterForNotFound_Left + searchString.ToUpper();
+                                    
                                     break;
 
                                 default:
@@ -436,7 +455,7 @@ namespace AbbreviationGlossary
             LoadCsvFileFromStreamReader(rdr);
         }
 
-  
+
         private void LoadCsvFileFromStreamReader(StreamReader rdr)
         {
             CsvReader csv = new CsvReader(rdr);

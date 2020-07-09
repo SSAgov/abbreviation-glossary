@@ -61,6 +61,42 @@ namespace AbbreviationGlossary.Tests.Unit
             Assert.Equal(term, convertedterm);
         }
 
+
+        [Fact]
+        public void HyphenDelimeter_Input()
+        {
+            //Arrange
+            Glossary nsg = TestData.GetTestGlossary();
+            nsg.TermConverterConfiguration.AbbreviationDelimeter = "-";
+            nsg.TermConverterConfiguration.TermDelimeter = "-";
+            nsg.TermConverterConfiguration.AbbreviationCaseConvention = CaseConvention.lowercase;
+
+            //Act
+            string term = "Hearing-Office-Code";
+            string abbreviatedTerm = "hrg-ofc-cd";
+            string convertedAbbreviation = nsg.ExpandAbbreviation(abbreviatedTerm).Output;
+
+            //Assert
+            Assert.Equal(term, convertedAbbreviation);
+        }
+        [Fact]
+        public void HyphenDelimeter_Bad_Input()
+        {
+            //Arrange
+            Glossary nsg = TestData.GetTestGlossary();
+            nsg.TermConverterConfiguration.AbbreviationDelimeter = "-";
+            nsg.TermConverterConfiguration.TermDelimeter = "-";
+            nsg.TermConverterConfiguration.AbbreviationCaseConvention = CaseConvention.lowercase;
+            nsg.TermConverterConfiguration.DelimeterForNotFound_Left = "";
+            nsg.TermConverterConfiguration.DelimeterForNotFound_Right = "";
+            //Act
+            string term = "nopenope-Office-Code";
+            string abbreviatedTerm = "nopenope-ofc-cd";
+            string convertedAbbreviation = nsg.ExpandAbbreviation(abbreviatedTerm).Output;
+
+            //Assert
+            Assert.Equal(term, convertedAbbreviation);
+        }
         [Fact]
         public void Given_HOFC_CD_Expect_HearingOfficeCode()
         {
