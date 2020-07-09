@@ -138,6 +138,42 @@ namespace AbbreviationGlossary.Tests.Unit
             Assert.Equal(abbreviatedTerm, convertedAbbreviatedTerm);
         }
 
+        [Fact]
+        public void HyphenDelimeter_Output()
+        {
+            //Arrange
+            Glossary nsg = TestData.GetTestGlossary();
+            nsg.TermConverterConfiguration.AbbreviationDelimeter = "-";
+            nsg.TermConverterConfiguration.TermDelimeter = "-";
+            nsg.TermConverterConfiguration.AbbreviationCaseConvention = CaseConvention.lowercase;
+
+            //Act
+            string term = "Hearing-Office-Code";
+            string abbreviatedTerm = "hrg-ofc-cd";
+            string convertedAbbreviatedTerm = nsg.AbbreviateTerm(term).Output;
+
+            //Assert
+            Assert.Equal(abbreviatedTerm, convertedAbbreviatedTerm);
+        }
+
+        [Fact]
+        public void HyphenDelimeter_Input()
+        {
+            //Arrange
+            Glossary nsg = TestData.GetTestGlossary();
+            nsg.TermConverterConfiguration.AbbreviationDelimeter = "-";
+            nsg.TermConverterConfiguration.TermDelimeter = "-";
+            nsg.TermConverterConfiguration.AbbreviationCaseConvention = CaseConvention.lowercase;
+
+            //Act
+            string term = "Hearing-Office-Code";
+            string abbreviatedTerm = "hrg-ofc-cd";
+            string convertedAbbreviation = nsg.ExpandAbbreviation(abbreviatedTerm).Output;
+
+            //Assert
+            Assert.Equal(term, convertedAbbreviation);
+        }
+
 
 
         [Fact]

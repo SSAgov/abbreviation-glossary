@@ -327,7 +327,7 @@ namespace AbbreviationGlossary
                 else
                 {
                     int delimeterIndex = searchString.LastIndexOf(TermConverterConfiguration.TermDelimeter);
-                    if (!TermConverterConfiguration.TreatHyphenAsTermDelimeter)
+                    if (!TermConverterConfiguration.TreatHyphenAsTermDelimeter || TermConverterConfiguration.TermDelimeter =="-")
                     {
                         subStringOfsearchString = searchString.Substring(0, delimeterIndex);
                     }
